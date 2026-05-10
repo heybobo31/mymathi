@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Zahlenwerkstatt — Baue die 10</title>
+<title>Zahlenwerkstatt — Baue die Zahl</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Nunito:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -29,379 +29,108 @@
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    overflow-x: hidden;
   }
 
-  .app {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px 16px 60px;
-  }
+  .app { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
 
-  /* === HEADER === */
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .brand-mark {
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 800;
-    font-size: 28px;
-    color: var(--ink);
-    line-height: 1;
-  }
+  header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+  .brand-mark { font-family: 'Fraunces', Georgia, serif; font-weight: 800; font-size: 28px; line-height: 1; }
   .brand-mark::first-letter { color: var(--accent-clay); }
-
-  .lang-switch {
-    display: flex; gap: 4px;
-    background: var(--bg-paper);
-    padding: 4px;
-    border-radius: 999px;
-    box-shadow: var(--shadow-soft);
-  }
-
-  .lang-btn {
-    border: none; background: transparent;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-family: inherit; font-weight: 700; font-size: 12px;
-    color: var(--ink-soft);
-    cursor: pointer;
-  }
+  .lang-switch { display: flex; gap: 4px; background: var(--bg-paper); padding: 4px; border-radius: 999px; box-shadow: var(--shadow-soft); }
+  .lang-btn { border: none; background: transparent; padding: 6px 12px; border-radius: 999px; font-family: inherit; font-weight: 700; font-size: 12px; color: var(--ink-soft); cursor: pointer; }
   .lang-btn.active { background: var(--ink); color: var(--bg-paper); }
 
-  /* === TASK === */
-  .task {
-    background: var(--bg-paper);
-    border-radius: 20px;
-    padding: 18px 24px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow-soft);
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
+  .task { background: var(--bg-paper); border-radius: 20px; padding: 14px 22px; margin-bottom: 14px; box-shadow: var(--shadow-soft); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .task-target { display: flex; align-items: baseline; gap: 12px; flex: 1; min-width: 180px; }
-
-  .task-label {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 22px; font-weight: 600;
-  }
-
-  .task-target-num {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 52px; font-weight: 800;
-    color: var(--accent-clay);
-    line-height: 0.9;
-  }
-
-  .task-counter {
-    display: flex; align-items: center; gap: 10px;
-    background: var(--bg-cream);
-    padding: 8px 16px;
-    border-radius: 999px;
-  }
-
-  .counter-label {
-    font-size: 12px; color: var(--ink-soft);
-    font-weight: 700; text-transform: uppercase;
-  }
-
-  .counter-num {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 26px; font-weight: 800;
-    min-width: 32px; text-align: center;
-    transition: color 0.3s, transform 0.3s;
-  }
+  .task-label { font-family: 'Fraunces', Georgia, serif; font-size: 22px; font-weight: 600; }
+  .task-target-num { font-family: 'Fraunces', Georgia, serif; font-size: 48px; font-weight: 800; color: var(--accent-clay); line-height: 0.9; }
+  .task-counter { display: flex; align-items: center; gap: 10px; background: var(--bg-cream); padding: 8px 16px; border-radius: 999px; }
+  .counter-label { font-size: 12px; color: var(--ink-soft); font-weight: 700; text-transform: uppercase; }
+  .counter-num { font-family: 'Fraunces', Georgia, serif; font-size: 24px; font-weight: 800; min-width: 28px; text-align: center; transition: color 0.3s, transform 0.3s; }
   .counter-num.match { color: var(--accent-moss); transform: scale(1.15); }
   .counter-num.over { color: var(--accent-clay); }
 
-  /* === FEEDBACK === */
-  .feedback {
-    background: var(--bg-paper);
-    border-radius: 20px;
-    padding: 14px 20px;
-    box-shadow: var(--shadow-soft);
-    margin-bottom: 16px;
-    min-height: 56px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: background 0.3s;
-  }
-  .feedback-icon { font-size: 28px; flex-shrink: 0; }
-  .feedback-text { font-size: 15px; line-height: 1.4; font-weight: 500; }
+  .feedback { background: var(--bg-paper); border-radius: 20px; padding: 12px 18px; box-shadow: var(--shadow-soft); margin-bottom: 14px; min-height: 50px; display: flex; align-items: center; gap: 12px; transition: background 0.3s; }
+  .feedback-icon { font-size: 26px; flex-shrink: 0; }
+  .feedback-text { font-size: 14px; line-height: 1.4; font-weight: 500; }
   .feedback.success { background: linear-gradient(135deg, #e8f3dc, #d4ead4); }
   .feedback.discover { background: linear-gradient(135deg, #fff3d6, #ffe9b3); }
 
-  /* === WORKSPACE === */
-  .workspace {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-  @media (min-width: 720px) {
-    .workspace { grid-template-columns: 1.3fr 1fr; }
-  }
+  .workspace { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 14px; }
+  @media (min-width: 720px) { .workspace { grid-template-columns: 1.2fr 1fr; } }
 
-  /* === DROPZONE === */
-  .dropzone {
-    background: var(--bg-paper);
-    border-radius: 20px;
-    padding: 18px;
-    box-shadow: var(--shadow-soft);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .dropzone-title, .palette-title {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 16px; font-weight: 600;
-    color: var(--ink-soft);
-    margin: 0 0 12px;
-  }
+  .dropzone { background: var(--bg-paper); border-radius: 20px; padding: 16px; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; }
+  .dropzone-title, .palette-title { font-family: 'Fraunces', Georgia, serif; font-size: 16px; font-weight: 600; color: var(--ink-soft); margin: 0 0 10px; }
 
   .stack-area {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px;
-    border-radius: 14px;
+    display: flex; align-items: flex-end; justify-content: center;
+    gap: 30px; padding: 16px 12px 36px; border-radius: 14px;
     background-color: #f5f0e6;
-    background-image: repeating-linear-gradient(
-      to bottom,
-      transparent, transparent 27px,
-      rgba(43,42,38,0.08) 27px, rgba(43,42,38,0.08) 28px
-    );
-    min-height: 320px;
-    position: relative;
-    transition: background-color 0.2s;
+    background-image: repeating-linear-gradient(to bottom, transparent, transparent 27px, rgba(43,42,38,0.08) 27px, rgba(43,42,38,0.08) 28px);
+    min-height: 360px; position: relative; transition: background-color 0.2s;
   }
 
-  .target-line {
-    position: absolute;
-    left: 8px; right: 8px;
-    bottom: calc(12px + 280px); /* 10 × 28px */
-    height: 2px;
-    background: var(--accent-clay);
-    border-radius: 2px;
-    pointer-events: none;
-    opacity: 0.6;
-    z-index: 1;
-  }
-  .target-line::after {
-    content: "10";
-    position: absolute;
-    right: 0; top: -20px;
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 800; font-size: 13px;
-    color: var(--accent-clay);
-    background: var(--bg-paper);
-    padding: 0 6px;
-  }
+  .column { display: flex; flex-direction: column-reverse; align-items: center; min-width: 70px; position: relative; }
+  .column-label { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); font-family: 'Fraunces', Georgia, serif; font-size: 12px; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+  .column.target .column-label { color: var(--accent-clay); }
 
-  .stack-area.dragover { background-color: rgba(232,176,75,0.18); }
+  .stack-column-zone { width: 60px; min-height: 60px; border-radius: 10px; display: flex; flex-direction: column-reverse; align-items: center; border: 2px dashed transparent; transition: border-color 0.2s, background 0.2s; padding: 2px; }
+  .stack-column-zone.empty { border-color: rgba(43,42,38,0.2); background: rgba(255,255,255,0.4); }
+  .stack-column-zone.dragover { border-color: var(--accent-clay); background: rgba(232,176,75,0.15); }
+  .stack-column-zone-hint { color: var(--ink-soft); font-size: 11px; font-style: italic; text-align: center; padding: 8px 4px; pointer-events: none; }
+  .stack-column-zone:not(.empty) .stack-column-zone-hint { display: none; }
 
-  .placeholder {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--ink-soft);
-    font-style: italic;
-    font-size: 14px;
-    pointer-events: none;
-    opacity: 0.6;
-    text-align: center;
-    padding: 0 30px;
-  }
-
-  /* === BLOCK === */
   .block {
-    width: 50px;
-    border-radius: 8px;
-    box-shadow: var(--shadow-block);
-    cursor: grab;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    padding: 4px;
-    transition: transform 0.15s, box-shadow 0.15s;
-    position: relative;
-    flex-shrink: 0;
-    color: rgba(43,42,38,0.85);
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 800;
-    touch-action: none;
+    width: 56px; border-radius: 8px; box-shadow: var(--shadow-block);
+    cursor: grab; display: flex; flex-direction: column-reverse; align-items: center;
+    padding: 4px; transition: transform 0.15s, box-shadow 0.15s;
+    position: relative; flex-shrink: 0;
+    color: rgba(43,42,38,0.85); font-family: 'Fraunces', Georgia, serif; font-weight: 800;
+    touch-action: none; margin: 0;
   }
 
-  .block:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 0 rgba(43,42,38,0.18), 0 10px 20px rgba(43,42,38,0.14);
-  }
+  .stack-column-zone .block { margin: 0; border-radius: 4px; box-shadow: 0 2px 0 rgba(43,42,38,0.15), 0 4px 8px rgba(43,42,38,0.08); }
+  .stack-column-zone .block:first-child { border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
+  .stack-column-zone .block:last-child  { border-top-left-radius: 8px; border-top-right-radius: 8px; }
+
+  .block.target-block { cursor: default; box-shadow: 0 3px 0 rgba(43,42,38,0.15), 0 6px 14px rgba(43,42,38,0.08); border-radius: 8px; border: 2px dashed rgba(43,42,38,0.25); opacity: 0.85; }
+  .block:not(.target-block):hover { transform: translateY(-2px); box-shadow: 0 5px 0 rgba(43,42,38,0.18), 0 10px 20px rgba(43,42,38,0.14); }
   .block.dragging { opacity: 0.4; cursor: grabbing; }
+  .block.ghost { position: fixed; z-index: 1000; pointer-events: none; opacity: 0.95; transform: scale(1.08); box-shadow: 0 8px 0 rgba(43,42,38,0.20), 0 16px 32px rgba(43,42,38,0.20); margin: 0; }
 
-  .block.ghost {
-    position: fixed;
-    z-index: 1000;
-    pointer-events: none;
-    opacity: 0.95;
-    transform: scale(1.08);
-    box-shadow: 0 8px 0 rgba(43,42,38,0.20), 0 16px 32px rgba(43,42,38,0.20);
-    margin: 0;
-  }
-
-  .block-num {
-    font-size: 16px;
-    margin-top: 4px;
-    line-height: 1;
-  }
-
-  .block-dots {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 2px;
-    align-items: center;
-    width: 100%;
-  }
+  .block-num { font-size: 16px; margin-top: 2px; line-height: 1; }
+  .block-dots { display: flex; flex-direction: column-reverse; gap: 2px; align-items: center; width: 100%; }
   .dot-row { display: flex; gap: 3px; }
-  .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: rgba(43,42,38,0.45);
-  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(43,42,38,0.45); }
 
-  .stack-area .block .remove {
-    position: absolute;
-    top: -8px; right: -8px;
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    background: var(--ink);
-    color: var(--bg-paper);
-    border: none;
-    font-size: 15px;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    opacity: 1;
-  }
+  .palette { background: var(--bg-paper); border-radius: 20px; padding: 16px; box-shadow: var(--shadow-soft); transition: background 0.2s; }
+  .palette.dragover { background: rgba(107,142,78,0.10); }
+  .palette-hint { font-size: 12px; color: var(--ink-soft); margin: 0 0 14px; font-style: italic; }
+  .palette-grid { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; justify-content: center; min-height: 290px; }
 
-  /* === PALETTE === */
-  .palette {
-    background: var(--bg-paper);
-    border-radius: 20px;
-    padding: 18px;
-    box-shadow: var(--shadow-soft);
-  }
-
-  .palette-hint {
-    font-size: 12px;
-    color: var(--ink-soft);
-    margin: 0 0 14px;
-    font-style: italic;
-  }
-
-  .palette-grid {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    gap: 10px;
-    justify-content: center;
-    min-height: 290px;
-  }
-
-  /* === SOLUTIONS === */
-  .solutions {
-    background: var(--bg-paper);
-    border-radius: 20px;
-    padding: 18px;
-    box-shadow: var(--shadow-soft);
-  }
-
-  .solutions-header {
-    display: flex; justify-content: space-between; align-items: baseline;
-    margin-bottom: 12px;
-  }
-
-  .solutions-title {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 18px; font-weight: 600;
-    margin: 0;
-  }
-
+  .solutions { background: var(--bg-paper); border-radius: 20px; padding: 16px; box-shadow: var(--shadow-soft); }
+  .solutions-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .solutions-title { font-family: 'Fraunces', Georgia, serif; font-size: 18px; font-weight: 600; margin: 0; }
   .solutions-count { font-size: 12px; color: var(--ink-soft); font-weight: 700; }
-
-  .solutions-list {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    min-height: 40px;
-  }
-
-  .solution-chip {
-    display: flex; align-items: center; gap: 6px;
-    padding: 6px 12px;
-    border-radius: 999px;
-    background: var(--bg-cream);
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 700; font-size: 14px;
-    animation: chipPop 0.4s cubic-bezier(0.34,1.56,0.64,1);
-  }
+  .solutions-list { display: flex; flex-wrap: wrap; gap: 8px; min-height: 40px; }
+  .solution-chip { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: var(--bg-cream); font-family: 'Fraunces', Georgia, serif; font-weight: 700; font-size: 14px; animation: chipPop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
   .solution-chip-star { color: var(--accent-sun); font-size: 12px; }
   .solutions-empty { color: var(--ink-soft); font-style: italic; font-size: 13px; }
+  @keyframes chipPop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-  @keyframes chipPop {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-
-  /* === ACTIONS === */
   .actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-
-  .btn {
-    border: none;
-    padding: 10px 20px;
-    border-radius: 999px;
-    font-family: inherit;
-    font-weight: 700; font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: inline-flex; align-items: center; gap: 8px;
-    background: transparent;
-    color: var(--ink-soft);
-    border: 2px solid rgba(43,42,38,0.12);
-    touch-action: manipulation;
-  }
+  .btn { border: none; padding: 10px 20px; border-radius: 999px; font-family: inherit; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--ink-soft); border: 2px solid rgba(43,42,38,0.12); touch-action: manipulation; }
   .btn:hover { color: var(--ink); border-color: var(--ink); }
 
-  /* === CONFETTI === */
   .celebrate { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
-  .confetti {
-    position: absolute;
-    width: 10px; height: 14px;
-    border-radius: 2px;
-    animation: fall 1.6s ease-out forwards;
-  }
-  @keyframes fall {
-    0% { transform: translateY(-20vh) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
+  .confetti { position: absolute; width: 10px; height: 14px; border-radius: 2px; animation: fall 1.6s ease-out forwards; }
+  @keyframes fall { 0% { transform: translateY(-20vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 </style>
 </head>
 <body>
 
 <div class="app">
-
   <header>
     <div class="brand-mark">Zahlenwerkstatt</div>
     <div class="lang-switch" id="langSwitch">
@@ -415,7 +144,7 @@
   <div class="task">
     <div class="task-target">
       <span class="task-label" data-i18n="build">Baue die</span>
-      <span class="task-target-num">10</span>
+      <span class="task-target-num" id="targetNum">10</span>
     </div>
     <div class="task-counter">
       <span class="counter-label" data-i18n="yourTower">Dein Turm</span>
@@ -425,25 +154,34 @@
 
   <div class="feedback" id="feedback">
     <span class="feedback-icon">🌱</span>
-    <span class="feedback-text" data-i18n="welcome">Ziehe die Bausteine in den Bauplatz oder tippe sie an.</span>
+    <span class="feedback-text" data-i18n="welcome">Stapele Bausteine so hoch wie der Zielturm!</span>
   </div>
 
   <div class="workspace">
     <div class="dropzone">
-      <h3 class="dropzone-title" data-i18n="stack">Dein Bauplatz</h3>
+      <h3 class="dropzone-title" data-i18n="stack">Bauplatz</h3>
       <div class="stack-area" id="stackArea">
-        <div class="target-line"></div>
-        <div class="placeholder" id="placeholder" data-i18n="placeholder">Ziehe einen Baustein hierher</div>
+        <div class="column target">
+          <div id="targetBlockHolder"></div>
+          <div class="column-label" data-i18n="target">Ziel</div>
+        </div>
+        <div class="column">
+          <div class="stack-column-zone empty" id="stackColumn">
+            <div class="stack-column-zone-hint" data-i18n="dropHere">Hier stapeln</div>
+          </div>
+          <div class="column-label" data-i18n="yourStack">Dein Stapel</div>
+        </div>
       </div>
       <div class="actions">
         <button class="btn" id="clearBtn">↺ <span data-i18n="clear">Neu beginnen</span></button>
+        <button class="btn" id="newTargetBtn">🎲 <span data-i18n="newTarget">Neue Zahl</span></button>
       </div>
     </div>
 
-    <div class="palette">
-      <h3 class="palette-title" data-i18n="palette">Bausteine 1–10</h3>
-      <p class="palette-hint" data-i18n="hint">Ziehen oder antippen, um hinzuzufügen</p>
-      <div class="palette-grid" id="palette"></div>
+    <div class="palette" id="palette">
+      <h3 class="palette-title" data-i18n="palette">Bausteine</h3>
+      <p class="palette-hint" data-i18n="hint">Ziehen oder antippen — zurück ziehen zum Entfernen</p>
+      <div class="palette-grid" id="paletteGrid"></div>
     </div>
   </div>
 
@@ -456,109 +194,118 @@
       <span class="solutions-empty" data-i18n="noSolutions">Noch keine Lösung gefunden — probier's aus!</span>
     </div>
   </div>
-
 </div>
 
 <div class="celebrate" id="celebrate"></div>
 
 <script>
-const TARGET = 10;
-const UNIT = 28; // px pro Einheit — bewusst klein für Mobile
-
-// Farben pro Baustein (statt CSS-Variablen, damit garantiert immer geladen)
-const COLORS = {
-  1:  '#e57373', 2:  '#ffb74d', 3:  '#fff176', 4:  '#aed581', 5:  '#4db6ac',
-  6:  '#64b5f6', 7:  '#7986cb', 8:  '#ba68c8', 9:  '#f06292', 10: '#a1887f'
-};
+const UNIT = 28;
+let TARGET = 10;
+const COLORS = { 1:'#e57373', 2:'#ffb74d', 3:'#fff176', 4:'#aed581', 5:'#4db6ac', 6:'#64b5f6', 7:'#7986cb', 8:'#ba68c8', 9:'#f06292', 10:'#a1887f' };
 
 const i18n = {
   de: {
     build: "Baue die", yourTower: "Dein Turm",
-    welcome: "Ziehe die Bausteine in den Bauplatz oder tippe sie an.",
-    stack: "Dein Bauplatz", placeholder: "Ziehe einen Baustein hierher",
-    palette: "Bausteine 1–10", hint: "Ziehen oder antippen, um hinzuzufügen",
-    clear: "Neu beginnen", discoveries: "Deine Entdeckungen",
+    welcome: "Stapele Bausteine so hoch wie der Zielturm!",
+    stack: "Bauplatz", dropHere: "Hier stapeln",
+    target: "Ziel", yourStack: "Dein Stapel",
+    palette: "Bausteine", hint: "Ziehen oder antippen — zurück ziehen zum Entfernen",
+    clear: "Neu beginnen", newTarget: "Neue Zahl",
+    discoveries: "Deine Entdeckungen",
     noSolutions: "Noch keine Lösung gefunden — probier's aus!",
-    fb_empty: "Ziehe die Bausteine in den Bauplatz oder tippe sie an.",
-    fb_match: "Du hast genau 10 gebaut! 🎉",
-    fb_under: (n) => `Dein Turm ist noch um ${TARGET - n} kleiner. Was passt noch dazu?`,
-    fb_over:  (n) => `Dein Turm ist um ${n - TARGET} zu hoch. Welcher Baustein muss weg?`,
+    fb_empty: "Stapele Bausteine so hoch wie der Zielturm!",
+    fb_match: (n) => `Geschafft! Du hast die ${n} gebaut! 🎉`,
+    fb_under: (n, t) => `Dein Turm ist noch um ${t - n} kleiner. Was passt noch dazu?`,
+    fb_over:  (n, t) => `Dein Turm ist um ${n - t} zu hoch. Welcher Baustein muss weg?`,
     fb_new_solution: "Neue Lösung entdeckt! ✨",
   },
   fr: {
     build: "Construis le", yourTower: "Ta tour",
-    welcome: "Glisse les blocs sur le chantier ou tape dessus.",
-    stack: "Ton chantier", placeholder: "Glisse un bloc ici",
-    palette: "Blocs 1–10", hint: "Glisse ou tape pour ajouter",
-    clear: "Recommencer", discoveries: "Tes découvertes",
+    welcome: "Empile des blocs aussi haut que la tour cible !",
+    stack: "Chantier", dropHere: "Empile ici",
+    target: "Cible", yourStack: "Ta tour",
+    palette: "Blocs", hint: "Glisse ou tape — ramène un bloc pour l'enlever",
+    clear: "Recommencer", newTarget: "Nouveau nombre",
+    discoveries: "Tes découvertes",
     noSolutions: "Aucune solution trouvée — essaie !",
-    fb_empty: "Glisse les blocs sur le chantier ou tape dessus.",
-    fb_match: "Tu as construit 10 exactement ! 🎉",
-    fb_under: (n) => `Il manque encore ${TARGET - n} à ta tour.`,
-    fb_over:  (n) => `Ta tour dépasse de ${n - TARGET}.`,
+    fb_empty: "Empile des blocs aussi haut que la tour cible !",
+    fb_match: (n) => `Bravo ! Tu as construit ${n} ! 🎉`,
+    fb_under: (n, t) => `Il manque ${t - n} à ta tour.`,
+    fb_over:  (n, t) => `Ta tour dépasse de ${n - t}.`,
     fb_new_solution: "Nouvelle solution découverte ! ✨",
   },
   lu: {
     build: "Bau d'", yourTower: "Däin Tuerm",
-    welcome: "Zéi d'Bléck op de Bauplaz oder klick se un.",
-    stack: "Däi Bauplaz", placeholder: "Zéi e Block hierhinner",
-    palette: "Bléck 1–10", hint: "Zéien oder uklicken",
-    clear: "Nei ufänken", discoveries: "Deng Entdeckungen",
+    welcome: "Stapelt Bléck esou héich wéi den Zilltuerm!",
+    stack: "Bauplaz", dropHere: "Hei stapelen",
+    target: "Zil", yourStack: "Däin Stapel",
+    palette: "Bléck", hint: "Zéien oder klicken — zréck zéien fir ewechzehuelen",
+    clear: "Nei ufänken", newTarget: "Nei Zuel",
+    discoveries: "Deng Entdeckungen",
     noSolutions: "Nach keng Léisung fonnt!",
-    fb_empty: "Zéi d'Bléck op de Bauplaz oder klick se un.",
-    fb_match: "Du hues genau 10 gebaut! 🎉",
-    fb_under: (n) => `Däin Tuerm ass nach ëm ${TARGET - n} méi kleng.`,
-    fb_over:  (n) => `Däin Tuerm ass ëm ${n - TARGET} ze héich.`,
+    fb_empty: "Stapelt Bléck esou héich wéi den Zilltuerm!",
+    fb_match: (n) => `Gemaach! Du hues ${n} gebaut! 🎉`,
+    fb_under: (n, t) => `Däin Tuerm ass nach ëm ${t - n} méi kleng.`,
+    fb_over:  (n, t) => `Däin Tuerm ass ëm ${n - t} ze héich.`,
     fb_new_solution: "Nei Léisung entdeckt! ✨",
   },
   en: {
     build: "Build", yourTower: "Your tower",
-    welcome: "Drag blocks to the workspace or tap them.",
-    stack: "Your workspace", placeholder: "Drag a block here",
-    palette: "Blocks 1–10", hint: "Drag or tap to add",
-    clear: "Start over", discoveries: "Your discoveries",
+    welcome: "Stack blocks as tall as the target tower!",
+    stack: "Workspace", dropHere: "Stack here",
+    target: "Target", yourStack: "Your stack",
+    palette: "Blocks", hint: "Drag or tap — drag back to remove",
+    clear: "Start over", newTarget: "New number",
+    discoveries: "Your discoveries",
     noSolutions: "No solution yet — try!",
-    fb_empty: "Drag blocks to the workspace or tap them.",
-    fb_match: "You built exactly 10! 🎉",
-    fb_under: (n) => `Your tower is ${TARGET - n} shorter.`,
-    fb_over:  (n) => `Your tower is ${n - TARGET} too tall.`,
+    fb_empty: "Stack blocks as tall as the target tower!",
+    fb_match: (n) => `Got it! You built ${n}! 🎉`,
+    fb_under: (n, t) => `Your tower is ${t - n} shorter.`,
+    fb_over:  (n, t) => `Your tower is ${n - t} too tall.`,
     fb_new_solution: "New solution found! ✨",
   },
 };
 
 let currentLang = "de";
-const t = (key, ...args) => {
-  const v = i18n[currentLang][key];
-  return typeof v === "function" ? v(...args) : v;
-};
+const t = (key, ...args) => { const v = i18n[currentLang][key]; return typeof v === "function" ? v(...args) : v; };
 
 let stackBlocks = [];
 let solutions = new Set();
 let blockIdCounter = 0;
 
-const stackArea = document.getElementById("stackArea");
+const stackColumn = document.getElementById("stackColumn");
 const paletteEl = document.getElementById("palette");
+const paletteGrid = document.getElementById("paletteGrid");
+const targetBlockHolder = document.getElementById("targetBlockHolder");
+const targetNumEl = document.getElementById("targetNum");
 const counterEl = document.getElementById("counter");
 const feedbackEl = document.getElementById("feedback");
-const placeholder = document.getElementById("placeholder");
 const solutionsList = document.getElementById("solutionsList");
 const solutionsCount = document.getElementById("solutionsCount");
 
-// === Build palette ===
-for (let i = 1; i <= 10; i++) {
-  const block = createBlockEl(i, false);
-  paletteEl.appendChild(block);
+function buildPalette() {
+  paletteGrid.innerHTML = "";
+  for (let i = 1; i <= 10; i++) {
+    if (i === TARGET) continue;
+    paletteGrid.appendChild(createBlockEl(i, "palette"));
+  }
 }
-console.log("[Zahlenwerkstatt] Palette gebaut:", paletteEl.children.length, "Bausteine");
 
-function createBlockEl(value, withRemove) {
+function buildTarget() {
+  targetBlockHolder.innerHTML = "";
+  targetNumEl.textContent = TARGET;
+  targetBlockHolder.appendChild(createBlockEl(TARGET, "target"));
+}
+
+function createBlockEl(value, location) {
   const block = document.createElement("div");
   block.className = "block";
   block.style.height = (UNIT * value) + "px";
   block.style.background = COLORS[value];
   block.dataset.value = value;
+  block.dataset.location = location;
+  if (location === "target") block.classList.add("target-block");
 
-  // Punkte (Mengenvisualisierung)
   const dotsWrap = document.createElement("div");
   dotsWrap.className = "block-dots";
   let remaining = value;
@@ -581,33 +328,16 @@ function createBlockEl(value, withRemove) {
   num.textContent = value;
   block.appendChild(num);
 
-  if (withRemove) {
-    const rm = document.createElement("button");
-    rm.className = "remove";
-    rm.textContent = "×";
-    rm.addEventListener("pointerdown", (e) => e.stopPropagation());
-    rm.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const id = parseInt(block.dataset.id);
-      stackBlocks = stackBlocks.filter(b => b.id !== id);
-      block.remove();
-      updateUI();
-    });
-    block.appendChild(rm);
-  }
-
-  attachDragHandlers(block, value, withRemove);
+  if (location !== "target") attachDragHandlers(block, value);
   return block;
 }
 
-function attachDragHandlers(block, value, isInStack) {
+function attachDragHandlers(block, value) {
   let dragState = null;
 
   block.addEventListener("pointerdown", (e) => {
-    if (e.target.classList.contains("remove")) return;
     if (e.button !== undefined && e.button !== 0) return;
     e.preventDefault();
-
     const rect = block.getBoundingClientRect();
     dragState = {
       startX: e.clientX, startY: e.clientY,
@@ -628,7 +358,6 @@ function attachDragHandlers(block, value, isInStack) {
       dragState.moved = true;
       const ghost = block.cloneNode(true);
       ghost.classList.add("ghost");
-      ghost.querySelectorAll(".remove").forEach(r => r.remove());
       ghost.style.width = dragState.width + "px";
       ghost.style.height = dragState.height + "px";
       ghost.style.left = (e.clientX - dragState.offsetX) + "px";
@@ -643,9 +372,10 @@ function attachDragHandlers(block, value, isInStack) {
       dragState.ghost.style.top = (e.clientY - dragState.offsetY) + "px";
     }
 
-    const r = stackArea.getBoundingClientRect();
-    const over = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
-    stackArea.classList.toggle("dragover", over);
+    const overStack = isOverEl(e, stackColumn);
+    const overPalette = isOverEl(e, paletteEl);
+    stackColumn.classList.toggle("dragover", overStack && block.dataset.location === "palette");
+    paletteEl.classList.toggle("dragover", overPalette && block.dataset.location === "stack");
   });
 
   block.addEventListener("pointerup", (e) => {
@@ -653,15 +383,20 @@ function attachDragHandlers(block, value, isInStack) {
     const wasMoved = dragState.moved;
     if (dragState.ghost) dragState.ghost.remove();
     block.classList.remove("dragging");
-    stackArea.classList.remove("dragover");
+    stackColumn.classList.remove("dragover");
+    paletteEl.classList.remove("dragover");
     try { block.releasePointerCapture(e.pointerId); } catch(_) {}
 
-    if (!wasMoved) {
-      if (!isInStack) addBlockToStack(value);
-    } else {
-      const r = stackArea.getBoundingClientRect();
-      const over = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
-      if (over && !isInStack) addBlockToStack(value);
+    const fromLocation = block.dataset.location;
+    const overStack = wasMoved && isOverEl(e, stackColumn);
+    const overPalette = wasMoved && isOverEl(e, paletteEl);
+
+    if (fromLocation === "palette") {
+      if (!wasMoved || overStack) addToStack(value);
+    } else if (fromLocation === "stack") {
+      if (overPalette || (wasMoved && !overStack)) {
+        removeFromStack(parseInt(block.dataset.id));
+      }
     }
     dragState = null;
   });
@@ -670,18 +405,38 @@ function attachDragHandlers(block, value, isInStack) {
     if (!dragState) return;
     if (dragState.ghost) dragState.ghost.remove();
     block.classList.remove("dragging");
-    stackArea.classList.remove("dragover");
+    stackColumn.classList.remove("dragover");
+    paletteEl.classList.remove("dragover");
     dragState = null;
   });
 }
 
-function addBlockToStack(value) {
+function isOverEl(e, el) {
+  const r = el.getBoundingClientRect();
+  return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+}
+
+function addToStack(value) {
   const id = ++blockIdCounter;
   stackBlocks.push({ id, value });
-  const blockEl = createBlockEl(value, true);
-  blockEl.dataset.id = id;
-  stackArea.appendChild(blockEl);
+  renderStack();
   updateUI();
+}
+
+function removeFromStack(id) {
+  stackBlocks = stackBlocks.filter(b => b.id !== id);
+  renderStack();
+  updateUI();
+}
+
+function renderStack() {
+  stackColumn.innerHTML = '<div class="stack-column-zone-hint">' + t("dropHere") + '</div>';
+  stackColumn.classList.toggle("empty", stackBlocks.length === 0);
+  stackBlocks.forEach(b => {
+    const el = createBlockEl(b.value, "stack");
+    el.dataset.id = b.id;
+    stackColumn.appendChild(el);
+  });
 }
 
 function updateUI() {
@@ -691,8 +446,6 @@ function updateUI() {
   if (sum === TARGET) counterEl.classList.add("match");
   else if (sum > TARGET) counterEl.classList.add("over");
 
-  placeholder.style.display = stackBlocks.length === 0 ? "flex" : "none";
-
   feedbackEl.classList.remove("success", "discover");
   const icon = feedbackEl.querySelector(".feedback-icon");
   const text = feedbackEl.querySelector(".feedback-text");
@@ -700,10 +453,10 @@ function updateUI() {
   if (sum === 0) { icon.textContent = "🌱"; text.textContent = t("fb_empty"); }
   else if (sum === TARGET) {
     feedbackEl.classList.add("success");
-    icon.textContent = "🎯"; text.textContent = t("fb_match");
+    icon.textContent = "🎯"; text.textContent = t("fb_match", TARGET);
     registerSolution();
-  } else if (sum < TARGET) { icon.textContent = "🧩"; text.textContent = t("fb_under", sum); }
-  else { icon.textContent = "💭"; text.textContent = t("fb_over", sum); }
+  } else if (sum < TARGET) { icon.textContent = "🧩"; text.textContent = t("fb_under", sum, TARGET); }
+  else { icon.textContent = "💭"; text.textContent = t("fb_over", sum, TARGET); }
 }
 
 function registerSolution() {
@@ -755,8 +508,21 @@ function celebrate() {
 
 document.getElementById("clearBtn").addEventListener("click", () => {
   stackBlocks = [];
-  stackArea.querySelectorAll(".block").forEach(b => b.remove());
+  renderStack();
   updateUI();
+});
+
+document.getElementById("newTargetBtn").addEventListener("click", () => {
+  let newTarget;
+  do { newTarget = 3 + Math.floor(Math.random() * 8); } while (newTarget === TARGET);
+  TARGET = newTarget;
+  stackBlocks = [];
+  solutions.clear();
+  buildPalette();
+  buildTarget();
+  renderStack();
+  updateUI();
+  renderSolutions();
 });
 
 document.getElementById("langSwitch").addEventListener("click", (e) => {
@@ -772,13 +538,17 @@ document.getElementById("langSwitch").addEventListener("click", (e) => {
       el.textContent = i18n[currentLang][key];
     }
   });
+  renderStack();
   renderSolutions();
   updateUI();
 });
 
+buildPalette();
+buildTarget();
+renderStack();
 updateUI();
 renderSolutions();
-console.log("[Zahlenwerkstatt] App bereit.");
+console.log("[Zahlenwerkstatt v4] Bereit. Ziel:", TARGET);
 </script>
 </body>
 </html>
