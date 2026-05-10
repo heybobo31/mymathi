@@ -4,41 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Zahlenwerkstatt — Baue die 10</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Nunito:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
-  /* ================================================================
-     ZAHLENWERKSTATT — Demo "Baue die 10"
-     Inspiration: intuitibrix, MATHI, Montessori
-     ================================================================ */
-
   :root {
-    /* Warme, ruhige Palette — kein "AI purple gradient" */
     --bg-cream: #faf6ef;
     --bg-paper: #fffdf8;
     --ink: #2b2a26;
     --ink-soft: #6a6760;
     --accent-clay: #d77a4b;
     --accent-moss: #6b8e4e;
-    --accent-sky: #5a8fb8;
     --accent-sun: #e8b04b;
-    --shadow-soft: 0 2px 6px rgba(43, 42, 38, 0.06), 0 8px 24px rgba(43, 42, 38, 0.04);
-    --shadow-block: 0 3px 0 rgba(43, 42, 38, 0.18), 0 6px 14px rgba(43, 42, 38, 0.10);
-
-    /* Bausteinfarben (intuitibrix-inspiriert: jede Zahl eine eigene Farbe) */
-    --b1:  #e57373;
-    --b2:  #ffb74d;
-    --b3:  #fff176;
-    --b4:  #aed581;
-    --b5:  #4db6ac;
-    --b6:  #64b5f6;
-    --b7:  #7986cb;
-    --b8:  #ba68c8;
-    --b9:  #f06292;
-    --b10: #a1887f;
-
-    --unit: 32px; /* Höhe pro Einheit eines Bausteins */
+    --shadow-soft: 0 2px 6px rgba(43,42,38,0.06), 0 8px 24px rgba(43,42,38,0.04);
+    --shadow-block: 0 3px 0 rgba(43,42,38,0.18), 0 6px 14px rgba(43,42,38,0.10);
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -47,29 +24,17 @@
     margin: 0; padding: 0;
     background: var(--bg-cream);
     color: var(--ink);
-    font-family: 'Nunito', -apple-system, sans-serif;
-    overflow-x: hidden;
+    font-family: 'Nunito', system-ui, -apple-system, sans-serif;
     min-height: 100vh;
     user-select: none;
     -webkit-user-select: none;
-  }
-
-  /* Subtile Papier-Textur */
-  body::before {
-    content: "";
-    position: fixed; inset: 0;
-    background-image: radial-gradient(circle at 20% 30%, rgba(232, 176, 75, 0.04) 0%, transparent 50%),
-                      radial-gradient(circle at 80% 70%, rgba(90, 143, 184, 0.04) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+    touch-action: manipulation;
   }
 
   .app {
-    position: relative;
-    z-index: 1;
     max-width: 1100px;
     margin: 0 auto;
-    padding: 24px 20px 60px;
+    padding: 20px 16px 60px;
   }
 
   /* === HEADER === */
@@ -77,41 +42,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .brand {
-    display: flex;
-    align-items: baseline;
     gap: 12px;
   }
 
   .brand-mark {
-    font-family: 'Fraunces', serif;
+    font-family: 'Fraunces', Georgia, serif;
     font-weight: 800;
-    font-size: 32px;
-    letter-spacing: -0.02em;
+    font-size: 28px;
     color: var(--ink);
     line-height: 1;
   }
-
-  .brand-mark::first-letter {
-    color: var(--accent-clay);
-  }
-
-  .brand-sub {
-    font-size: 13px;
-    color: var(--ink-soft);
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
+  .brand-mark::first-letter { color: var(--accent-clay); }
 
   .lang-switch {
-    display: flex;
-    gap: 4px;
+    display: flex; gap: 4px;
     background: var(--bg-paper);
     padding: 4px;
     border-radius: 999px;
@@ -119,172 +65,150 @@
   }
 
   .lang-btn {
-    border: none;
-    background: transparent;
-    padding: 6px 14px;
+    border: none; background: transparent;
+    padding: 6px 12px;
     border-radius: 999px;
-    font-family: inherit;
-    font-weight: 700;
-    font-size: 13px;
+    font-family: inherit; font-weight: 700; font-size: 12px;
     color: var(--ink-soft);
     cursor: pointer;
-    transition: all 0.2s ease;
   }
+  .lang-btn.active { background: var(--ink); color: var(--bg-paper); }
 
-  .lang-btn:hover { color: var(--ink); }
-  .lang-btn.active {
-    background: var(--ink);
-    color: var(--bg-paper);
-  }
-
-  /* === TASK CARD === */
+  /* === TASK === */
   .task {
     background: var(--bg-paper);
-    border-radius: 24px;
-    padding: 24px 28px;
-    margin-bottom: 28px;
+    border-radius: 20px;
+    padding: 18px 24px;
+    margin-bottom: 16px;
     box-shadow: var(--shadow-soft);
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
     flex-wrap: wrap;
   }
 
-  .task-target {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    flex: 1;
-    min-width: 200px;
-  }
+  .task-target { display: flex; align-items: baseline; gap: 12px; flex: 1; min-width: 180px; }
 
   .task-label {
-    font-family: 'Fraunces', serif;
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--ink);
-    letter-spacing: -0.01em;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 22px; font-weight: 600;
   }
 
   .task-target-num {
-    font-family: 'Fraunces', serif;
-    font-size: 64px;
-    font-weight: 800;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 52px; font-weight: 800;
     color: var(--accent-clay);
     line-height: 0.9;
-    letter-spacing: -0.04em;
   }
 
   .task-counter {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
     background: var(--bg-cream);
-    padding: 10px 18px;
+    padding: 8px 16px;
     border-radius: 999px;
   }
 
   .counter-label {
-    font-size: 13px;
-    color: var(--ink-soft);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    font-size: 12px; color: var(--ink-soft);
+    font-weight: 700; text-transform: uppercase;
   }
 
   .counter-num {
-    font-family: 'Fraunces', serif;
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--ink);
-    min-width: 36px;
-    text-align: center;
-    transition: color 0.3s ease, transform 0.3s ease;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 26px; font-weight: 800;
+    min-width: 32px; text-align: center;
+    transition: color 0.3s, transform 0.3s;
   }
-
   .counter-num.match { color: var(--accent-moss); transform: scale(1.15); }
   .counter-num.over { color: var(--accent-clay); }
 
-  /* === MAIN AREA === */
+  /* === FEEDBACK === */
+  .feedback {
+    background: var(--bg-paper);
+    border-radius: 20px;
+    padding: 14px 20px;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 16px;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.3s;
+  }
+  .feedback-icon { font-size: 28px; flex-shrink: 0; }
+  .feedback-text { font-size: 15px; line-height: 1.4; font-weight: 500; }
+  .feedback.success { background: linear-gradient(135deg, #e8f3dc, #d4ead4); }
+  .feedback.discover { background: linear-gradient(135deg, #fff3d6, #ffe9b3); }
+
+  /* === WORKSPACE === */
   .workspace {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 24px;
-    margin-bottom: 28px;
+    gap: 16px;
+    margin-bottom: 16px;
   }
-
   @media (min-width: 720px) {
-    .workspace { grid-template-columns: 1.4fr 1fr; }
+    .workspace { grid-template-columns: 1.3fr 1fr; }
   }
 
-  /* === DROP ZONE === */
+  /* === DROPZONE === */
   .dropzone {
     background: var(--bg-paper);
-    border-radius: 24px;
-    padding: 24px;
+    border-radius: 20px;
+    padding: 18px;
     box-shadow: var(--shadow-soft);
-    position: relative;
-    min-height: 380px;
     display: flex;
     flex-direction: column;
   }
 
-  .dropzone-title {
-    font-family: 'Fraunces', serif;
-    font-size: 18px;
-    font-weight: 600;
+  .dropzone-title, .palette-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 16px; font-weight: 600;
     color: var(--ink-soft);
-    margin: 0 0 16px;
+    margin: 0 0 12px;
   }
 
   .stack-area {
-    flex: 1;
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    gap: 10px;
-    padding: 16px;
-    border-radius: 16px;
-    background: repeating-linear-gradient(
+    gap: 8px;
+    padding: 12px;
+    border-radius: 14px;
+    background-color: #f5f0e6;
+    background-image: repeating-linear-gradient(
       to bottom,
-      transparent,
-      transparent calc(var(--unit) - 1px),
-      rgba(43, 42, 38, 0.06) calc(var(--unit) - 1px),
-      rgba(43, 42, 38, 0.06) var(--unit)
+      transparent, transparent 27px,
+      rgba(43,42,38,0.08) 27px, rgba(43,42,38,0.08) 28px
     );
-    min-height: 340px;
+    min-height: 320px;
     position: relative;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s;
   }
 
-  /* Ziellinie bei Höhe 10 */
   .target-line {
     position: absolute;
     left: 8px; right: 8px;
-    bottom: calc(16px + var(--unit) * 10);
+    bottom: calc(12px + 280px); /* 10 × 28px */
     height: 2px;
     background: var(--accent-clay);
     border-radius: 2px;
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.6;
+    z-index: 1;
   }
-
   .target-line::after {
     content: "10";
     position: absolute;
-    right: 0;
-    top: -22px;
-    font-family: 'Fraunces', serif;
-    font-weight: 800;
-    font-size: 14px;
+    right: 0; top: -20px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 800; font-size: 13px;
     color: var(--accent-clay);
     background: var(--bg-paper);
     padding: 0 6px;
   }
 
-  .stack-area.dragover {
-    background-color: rgba(232, 176, 75, 0.08);
-  }
+  .stack-area.dragover { background-color: rgba(232,176,75,0.18); }
 
   .placeholder {
     position: absolute;
@@ -294,7 +218,7 @@
     justify-content: center;
     color: var(--ink-soft);
     font-style: italic;
-    font-size: 15px;
+    font-size: 14px;
     pointer-events: none;
     opacity: 0.6;
     text-align: center;
@@ -303,7 +227,7 @@
 
   /* === BLOCK === */
   .block {
-    width: 56px;
+    width: 50px;
     border-radius: 8px;
     box-shadow: var(--shadow-block);
     cursor: grab;
@@ -311,30 +235,37 @@
     flex-direction: column-reverse;
     align-items: center;
     padding: 4px;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.15s, box-shadow 0.15s;
     position: relative;
     flex-shrink: 0;
-    color: rgba(43, 42, 38, 0.85);
-    font-family: 'Fraunces', serif;
+    color: rgba(43,42,38,0.85);
+    font-family: 'Fraunces', Georgia, serif;
     font-weight: 800;
+    touch-action: none;
   }
 
   .block:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 0 rgba(43, 42, 38, 0.18), 0 10px 20px rgba(43, 42, 38, 0.14);
+    box-shadow: 0 5px 0 rgba(43,42,38,0.18), 0 10px 20px rgba(43,42,38,0.14);
+  }
+  .block.dragging { opacity: 0.4; cursor: grabbing; }
+
+  .block.ghost {
+    position: fixed;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0.95;
+    transform: scale(1.08);
+    box-shadow: 0 8px 0 rgba(43,42,38,0.20), 0 16px 32px rgba(43,42,38,0.20);
+    margin: 0;
   }
 
-  .block:active { cursor: grabbing; transform: scale(0.96); }
-
-  .block.dragging { opacity: 0.4; }
-
   .block-num {
-    font-size: 18px;
+    font-size: 16px;
     margin-top: 4px;
     line-height: 1;
   }
 
-  /* Punkte (intuitibrix-Stil): zeigen Menge visuell */
   .block-dots {
     display: flex;
     flex-direction: column-reverse;
@@ -342,19 +273,13 @@
     align-items: center;
     width: 100%;
   }
-
-  .dot-row {
-    display: flex;
-    gap: 3px;
-  }
-
+  .dot-row { display: flex; gap: 3px; }
   .dot {
-    width: 7px; height: 7px;
+    width: 6px; height: 6px;
     border-radius: 50%;
-    background: rgba(43, 42, 38, 0.45);
+    background: rgba(43,42,38,0.45);
   }
 
-  /* In drop zone: kleinerer remove button */
   .stack-area .block .remove {
     position: absolute;
     top: -8px; right: -8px;
@@ -363,137 +288,77 @@
     background: var(--ink);
     color: var(--bg-paper);
     border: none;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1;
     cursor: pointer;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
-    font-family: inherit;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    opacity: 1;
   }
-
-  .stack-area .block:hover .remove { display: flex; }
 
   /* === PALETTE === */
   .palette {
     background: var(--bg-paper);
-    border-radius: 24px;
-    padding: 24px;
+    border-radius: 20px;
+    padding: 18px;
     box-shadow: var(--shadow-soft);
   }
 
-  .palette-title {
-    font-family: 'Fraunces', serif;
-    font-size: 18px;
-    font-weight: 600;
+  .palette-hint {
+    font-size: 12px;
     color: var(--ink-soft);
-    margin: 0 0 16px;
+    margin: 0 0 14px;
+    font-style: italic;
   }
 
   .palette-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-    align-items: end;
-    justify-items: center;
-  }
-
-  /* === FEEDBACK === */
-  .feedback {
-    background: var(--bg-paper);
-    border-radius: 24px;
-    padding: 18px 24px;
-    box-shadow: var(--shadow-soft);
-    margin-bottom: 24px;
-    min-height: 60px;
     display: flex;
-    align-items: center;
-    gap: 14px;
-    transition: all 0.3s ease;
-  }
-
-  .feedback-icon {
-    font-size: 32px;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-
-  .feedback-text {
-    font-size: 16px;
-    color: var(--ink);
-    line-height: 1.4;
-    font-weight: 500;
-  }
-
-  .feedback.success {
-    background: linear-gradient(135deg, #e8f3dc 0%, #d4ead4 100%);
-  }
-
-  .feedback.discover {
-    background: linear-gradient(135deg, #fff3d6 0%, #ffe9b3 100%);
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 10px;
+    justify-content: center;
+    min-height: 290px;
   }
 
   /* === SOLUTIONS === */
   .solutions {
     background: var(--bg-paper);
-    border-radius: 24px;
-    padding: 24px;
+    border-radius: 20px;
+    padding: 18px;
     box-shadow: var(--shadow-soft);
   }
 
   .solutions-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 16px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 12px;
   }
 
   .solutions-title {
-    font-family: 'Fraunces', serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 18px; font-weight: 600;
     margin: 0;
   }
 
-  .solutions-count {
-    font-size: 13px;
-    color: var(--ink-soft);
-    font-weight: 700;
-  }
+  .solutions-count { font-size: 12px; color: var(--ink-soft); font-weight: 700; }
 
   .solutions-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    min-height: 50px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+    min-height: 40px;
   }
 
   .solution-chip {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 12px;
     border-radius: 999px;
     background: var(--bg-cream);
-    font-family: 'Fraunces', serif;
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--ink);
-    animation: chipPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 700; font-size: 14px;
+    animation: chipPop 0.4s cubic-bezier(0.34,1.56,0.64,1);
   }
-
-  .solution-chip-star {
-    color: var(--accent-sun);
-    font-size: 14px;
-  }
-
-  .solutions-empty {
-    color: var(--ink-soft);
-    font-style: italic;
-    font-size: 14px;
-  }
+  .solution-chip-star { color: var(--accent-sun); font-size: 12px; }
+  .solutions-empty { color: var(--ink-soft); font-style: italic; font-size: 13px; }
 
   @keyframes chipPop {
     from { transform: scale(0.5); opacity: 0; }
@@ -501,60 +366,34 @@
   }
 
   /* === ACTIONS === */
-  .actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 16px;
-    flex-wrap: wrap;
-  }
+  .actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 
   .btn {
     border: none;
-    padding: 12px 24px;
+    padding: 10px 20px;
     border-radius: 999px;
     font-family: inherit;
-    font-weight: 700;
-    font-size: 15px;
+    font-weight: 700; font-size: 14px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .btn-primary {
-    background: var(--ink);
-    color: var(--bg-paper);
-  }
-
-  .btn-primary:hover { background: var(--accent-clay); transform: translateY(-1px); }
-
-  .btn-ghost {
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
     background: transparent;
     color: var(--ink-soft);
-    border: 2px solid rgba(43, 42, 38, 0.12);
+    border: 2px solid rgba(43,42,38,0.12);
+    touch-action: manipulation;
   }
+  .btn:hover { color: var(--ink); border-color: var(--ink); }
 
-  .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
-
-  /* === CELEBRATION === */
-  .celebrate {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 100;
-  }
-
+  /* === CONFETTI === */
+  .celebrate { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
   .confetti {
     position: absolute;
-    width: 10px;
-    height: 14px;
+    width: 10px; height: 14px;
     border-radius: 2px;
     animation: fall 1.6s ease-out forwards;
   }
-
   @keyframes fall {
-    0%   { transform: translateY(-20vh) rotate(0deg); opacity: 1; }
+    0% { transform: translateY(-20vh) rotate(0deg); opacity: 1; }
     100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
   }
 </style>
@@ -564,10 +403,7 @@
 <div class="app">
 
   <header>
-    <div class="brand">
-      <div class="brand-mark">Zahlenwerkstatt</div>
-      <div class="brand-sub" data-i18n="tagline">Demo · Modul 1</div>
-    </div>
+    <div class="brand-mark">Zahlenwerkstatt</div>
     <div class="lang-switch" id="langSwitch">
       <button class="lang-btn active" data-lang="de">DE</button>
       <button class="lang-btn" data-lang="fr">FR</button>
@@ -589,7 +425,7 @@
 
   <div class="feedback" id="feedback">
     <span class="feedback-icon">🌱</span>
-    <span class="feedback-text" data-i18n="welcome">Wähle Bausteine und ziehe sie nach oben. Wie kannst du die 10 bauen?</span>
+    <span class="feedback-text" data-i18n="welcome">Ziehe die Bausteine in den Bauplatz oder tippe sie an.</span>
   </div>
 
   <div class="workspace">
@@ -600,14 +436,13 @@
         <div class="placeholder" id="placeholder" data-i18n="placeholder">Ziehe einen Baustein hierher</div>
       </div>
       <div class="actions">
-        <button class="btn btn-ghost" id="clearBtn">
-          <span>↺</span><span data-i18n="clear">Neu beginnen</span>
-        </button>
+        <button class="btn" id="clearBtn">↺ <span data-i18n="clear">Neu beginnen</span></button>
       </div>
     </div>
 
     <div class="palette">
       <h3 class="palette-title" data-i18n="palette">Bausteine 1–10</h3>
+      <p class="palette-hint" data-i18n="hint">Ziehen oder antippen, um hinzuzufügen</p>
       <div class="palette-grid" id="palette"></div>
     </div>
   </div>
@@ -627,80 +462,66 @@
 <div class="celebrate" id="celebrate"></div>
 
 <script>
-/* =================================================================
-   ZAHLENWERKSTATT — Logik
-   ================================================================= */
-
 const TARGET = 10;
+const UNIT = 28; // px pro Einheit — bewusst klein für Mobile
 
-// === I18n ===
+// Farben pro Baustein (statt CSS-Variablen, damit garantiert immer geladen)
+const COLORS = {
+  1:  '#e57373', 2:  '#ffb74d', 3:  '#fff176', 4:  '#aed581', 5:  '#4db6ac',
+  6:  '#64b5f6', 7:  '#7986cb', 8:  '#ba68c8', 9:  '#f06292', 10: '#a1887f'
+};
+
 const i18n = {
   de: {
-    tagline: "Demo · Modul 1",
-    build: "Baue die",
-    yourTower: "Dein Turm",
-    welcome: "Wähle Bausteine und ziehe sie nach oben. Wie kannst du die 10 bauen?",
-    stack: "Dein Bauplatz",
-    placeholder: "Ziehe einen Baustein hierher",
-    palette: "Bausteine 1–10",
-    clear: "Neu beginnen",
-    discoveries: "Deine Entdeckungen",
+    build: "Baue die", yourTower: "Dein Turm",
+    welcome: "Ziehe die Bausteine in den Bauplatz oder tippe sie an.",
+    stack: "Dein Bauplatz", placeholder: "Ziehe einen Baustein hierher",
+    palette: "Bausteine 1–10", hint: "Ziehen oder antippen, um hinzuzufügen",
+    clear: "Neu beginnen", discoveries: "Deine Entdeckungen",
     noSolutions: "Noch keine Lösung gefunden — probier's aus!",
-    fb_empty: "Wähle Bausteine und ziehe sie nach oben. Wie kannst du die 10 bauen?",
+    fb_empty: "Ziehe die Bausteine in den Bauplatz oder tippe sie an.",
     fb_match: "Du hast genau 10 gebaut! 🎉",
     fb_under: (n) => `Dein Turm ist noch um ${TARGET - n} kleiner. Was passt noch dazu?`,
     fb_over:  (n) => `Dein Turm ist um ${n - TARGET} zu hoch. Welcher Baustein muss weg?`,
     fb_new_solution: "Neue Lösung entdeckt! ✨",
   },
   fr: {
-    tagline: "Démo · Module 1",
-    build: "Construis le",
-    yourTower: "Ta tour",
-    welcome: "Choisis des blocs et fais-les glisser. Comment construire 10 ?",
-    stack: "Ton chantier",
-    placeholder: "Glisse un bloc ici",
-    palette: "Blocs 1–10",
-    clear: "Recommencer",
-    discoveries: "Tes découvertes",
+    build: "Construis le", yourTower: "Ta tour",
+    welcome: "Glisse les blocs sur le chantier ou tape dessus.",
+    stack: "Ton chantier", placeholder: "Glisse un bloc ici",
+    palette: "Blocs 1–10", hint: "Glisse ou tape pour ajouter",
+    clear: "Recommencer", discoveries: "Tes découvertes",
     noSolutions: "Aucune solution trouvée — essaie !",
-    fb_empty: "Choisis des blocs et fais-les glisser. Comment construire 10 ?",
+    fb_empty: "Glisse les blocs sur le chantier ou tape dessus.",
     fb_match: "Tu as construit 10 exactement ! 🎉",
-    fb_under: (n) => `Il manque encore ${TARGET - n} à ta tour. Que peux-tu ajouter ?`,
-    fb_over:  (n) => `Ta tour dépasse de ${n - TARGET}. Quel bloc enlever ?`,
+    fb_under: (n) => `Il manque encore ${TARGET - n} à ta tour.`,
+    fb_over:  (n) => `Ta tour dépasse de ${n - TARGET}.`,
     fb_new_solution: "Nouvelle solution découverte ! ✨",
   },
   lu: {
-    tagline: "Demo · Modul 1",
-    build: "Bau d'",
-    yourTower: "Däin Tuerm",
-    welcome: "Wiel Bléck a zéi se erop. Wéi kanns du d'10 bauen?",
-    stack: "Däi Bauplaz",
-    placeholder: "Zéi e Block hierhinner",
-    palette: "Bléck 1–10",
-    clear: "Nei ufänken",
-    discoveries: "Deng Entdeckungen",
-    noSolutions: "Nach keng Léisung fonnt — probéier!",
-    fb_empty: "Wiel Bléck a zéi se erop. Wéi kanns du d'10 bauen?",
+    build: "Bau d'", yourTower: "Däin Tuerm",
+    welcome: "Zéi d'Bléck op de Bauplaz oder klick se un.",
+    stack: "Däi Bauplaz", placeholder: "Zéi e Block hierhinner",
+    palette: "Bléck 1–10", hint: "Zéien oder uklicken",
+    clear: "Nei ufänken", discoveries: "Deng Entdeckungen",
+    noSolutions: "Nach keng Léisung fonnt!",
+    fb_empty: "Zéi d'Bléck op de Bauplaz oder klick se un.",
     fb_match: "Du hues genau 10 gebaut! 🎉",
-    fb_under: (n) => `Däin Tuerm ass nach ëm ${TARGET - n} méi kleng. Wat passt nach derbäi?`,
-    fb_over:  (n) => `Däin Tuerm ass ëm ${n - TARGET} ze héich. Wéi ee Block muss ewech?`,
+    fb_under: (n) => `Däin Tuerm ass nach ëm ${TARGET - n} méi kleng.`,
+    fb_over:  (n) => `Däin Tuerm ass ëm ${n - TARGET} ze héich.`,
     fb_new_solution: "Nei Léisung entdeckt! ✨",
   },
   en: {
-    tagline: "Demo · Module 1",
-    build: "Build",
-    yourTower: "Your tower",
-    welcome: "Pick blocks and drag them up. How can you build 10?",
-    stack: "Your workspace",
-    placeholder: "Drag a block here",
-    palette: "Blocks 1–10",
-    clear: "Start over",
-    discoveries: "Your discoveries",
-    noSolutions: "No solution yet — give it a try!",
-    fb_empty: "Pick blocks and drag them up. How can you build 10?",
+    build: "Build", yourTower: "Your tower",
+    welcome: "Drag blocks to the workspace or tap them.",
+    stack: "Your workspace", placeholder: "Drag a block here",
+    palette: "Blocks 1–10", hint: "Drag or tap to add",
+    clear: "Start over", discoveries: "Your discoveries",
+    noSolutions: "No solution yet — try!",
+    fb_empty: "Drag blocks to the workspace or tap them.",
     fb_match: "You built exactly 10! 🎉",
-    fb_under: (n) => `Your tower is ${TARGET - n} shorter. What could you add?`,
-    fb_over:  (n) => `Your tower is ${n - TARGET} too tall. Which block should go?`,
+    fb_under: (n) => `Your tower is ${TARGET - n} shorter.`,
+    fb_over:  (n) => `Your tower is ${n - TARGET} too tall.`,
     fb_new_solution: "New solution found! ✨",
   },
 };
@@ -711,25 +532,31 @@ const t = (key, ...args) => {
   return typeof v === "function" ? v(...args) : v;
 };
 
-// === State ===
-let stackBlocks = []; // [{id, value}]
-let solutions = new Set(); // canonical strings, e.g. "2+3+5"
+let stackBlocks = [];
+let solutions = new Set();
 let blockIdCounter = 0;
 
-// === Build palette ===
+const stackArea = document.getElementById("stackArea");
 const paletteEl = document.getElementById("palette");
+const counterEl = document.getElementById("counter");
+const feedbackEl = document.getElementById("feedback");
+const placeholder = document.getElementById("placeholder");
+const solutionsList = document.getElementById("solutionsList");
+const solutionsCount = document.getElementById("solutionsCount");
+
+// === Build palette ===
 for (let i = 1; i <= 10; i++) {
-  const btn = createBlockEl(i, false);
-  paletteEl.appendChild(btn);
+  const block = createBlockEl(i, false);
+  paletteEl.appendChild(block);
 }
+console.log("[Zahlenwerkstatt] Palette gebaut:", paletteEl.children.length, "Bausteine");
 
 function createBlockEl(value, withRemove) {
   const block = document.createElement("div");
   block.className = "block";
-  block.style.height = `calc(var(--unit) * ${value})`;
-  block.style.background = `var(--b${value})`;
+  block.style.height = (UNIT * value) + "px";
+  block.style.background = COLORS[value];
   block.dataset.value = value;
-  block.draggable = true;
 
   // Punkte (Mengenvisualisierung)
   const dotsWrap = document.createElement("div");
@@ -758,6 +585,7 @@ function createBlockEl(value, withRemove) {
     const rm = document.createElement("button");
     rm.className = "remove";
     rm.textContent = "×";
+    rm.addEventListener("pointerdown", (e) => e.stopPropagation());
     rm.addEventListener("click", (e) => {
       e.stopPropagation();
       const id = parseInt(block.dataset.id);
@@ -768,38 +596,84 @@ function createBlockEl(value, withRemove) {
     block.appendChild(rm);
   }
 
-  // Drag handlers
-  block.addEventListener("dragstart", (e) => {
-    block.classList.add("dragging");
-    e.dataTransfer.setData("text/plain", value);
-    e.dataTransfer.effectAllowed = "copy";
-  });
-  block.addEventListener("dragend", () => block.classList.remove("dragging"));
-
-  // Touch handlers (für Tablets) — Tap zum Hinzufügen aus Palette, Tap zum Entfernen aus Stack
-  if (!withRemove) {
-    block.addEventListener("click", () => addBlockToStack(value));
-  }
-
+  attachDragHandlers(block, value, withRemove);
   return block;
 }
 
-// === Drop zone ===
-const stackArea = document.getElementById("stackArea");
-const placeholder = document.getElementById("placeholder");
+function attachDragHandlers(block, value, isInStack) {
+  let dragState = null;
 
-stackArea.addEventListener("dragover", (e) => {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = "copy";
-  stackArea.classList.add("dragover");
-});
-stackArea.addEventListener("dragleave", () => stackArea.classList.remove("dragover"));
-stackArea.addEventListener("drop", (e) => {
-  e.preventDefault();
-  stackArea.classList.remove("dragover");
-  const value = parseInt(e.dataTransfer.getData("text/plain"));
-  if (!isNaN(value)) addBlockToStack(value);
-});
+  block.addEventListener("pointerdown", (e) => {
+    if (e.target.classList.contains("remove")) return;
+    if (e.button !== undefined && e.button !== 0) return;
+    e.preventDefault();
+
+    const rect = block.getBoundingClientRect();
+    dragState = {
+      startX: e.clientX, startY: e.clientY,
+      offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top,
+      width: rect.width, height: rect.height,
+      ghost: null, moved: false, pointerId: e.pointerId,
+    };
+    try { block.setPointerCapture(e.pointerId); } catch(_) {}
+  });
+
+  block.addEventListener("pointermove", (e) => {
+    if (!dragState || e.pointerId !== dragState.pointerId) return;
+    const dx = e.clientX - dragState.startX;
+    const dy = e.clientY - dragState.startY;
+    if (!dragState.moved && Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+
+    if (!dragState.moved) {
+      dragState.moved = true;
+      const ghost = block.cloneNode(true);
+      ghost.classList.add("ghost");
+      ghost.querySelectorAll(".remove").forEach(r => r.remove());
+      ghost.style.width = dragState.width + "px";
+      ghost.style.height = dragState.height + "px";
+      ghost.style.left = (e.clientX - dragState.offsetX) + "px";
+      ghost.style.top = (e.clientY - dragState.offsetY) + "px";
+      document.body.appendChild(ghost);
+      dragState.ghost = ghost;
+      block.classList.add("dragging");
+    }
+
+    if (dragState.ghost) {
+      dragState.ghost.style.left = (e.clientX - dragState.offsetX) + "px";
+      dragState.ghost.style.top = (e.clientY - dragState.offsetY) + "px";
+    }
+
+    const r = stackArea.getBoundingClientRect();
+    const over = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    stackArea.classList.toggle("dragover", over);
+  });
+
+  block.addEventListener("pointerup", (e) => {
+    if (!dragState || e.pointerId !== dragState.pointerId) return;
+    const wasMoved = dragState.moved;
+    if (dragState.ghost) dragState.ghost.remove();
+    block.classList.remove("dragging");
+    stackArea.classList.remove("dragover");
+    try { block.releasePointerCapture(e.pointerId); } catch(_) {}
+
+    if (!wasMoved) {
+      if (!isInStack) addBlockToStack(value);
+    } else {
+      const r = stackArea.getBoundingClientRect();
+      const over = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      if (over && !isInStack) addBlockToStack(value);
+    }
+    dragState = null;
+  });
+
+  block.addEventListener("pointercancel", () => {
+    if (!dragState) return;
+    if (dragState.ghost) dragState.ghost.remove();
+    block.classList.remove("dragging");
+    stackArea.classList.remove("dragover");
+    dragState = null;
+  });
+}
 
 function addBlockToStack(value) {
   const id = ++blockIdCounter;
@@ -810,54 +684,34 @@ function addBlockToStack(value) {
   updateUI();
 }
 
-// === Update UI ===
-const counterEl = document.getElementById("counter");
-const feedbackEl = document.getElementById("feedback");
-
 function updateUI() {
   const sum = stackBlocks.reduce((a, b) => a + b.value, 0);
   counterEl.textContent = sum;
   counterEl.classList.remove("match", "over");
-
   if (sum === TARGET) counterEl.classList.add("match");
   else if (sum > TARGET) counterEl.classList.add("over");
 
   placeholder.style.display = stackBlocks.length === 0 ? "flex" : "none";
 
-  // Feedback
   feedbackEl.classList.remove("success", "discover");
   const icon = feedbackEl.querySelector(".feedback-icon");
   const text = feedbackEl.querySelector(".feedback-text");
 
-  if (sum === 0) {
-    icon.textContent = "🌱";
-    text.textContent = t("fb_empty");
-  } else if (sum === TARGET) {
+  if (sum === 0) { icon.textContent = "🌱"; text.textContent = t("fb_empty"); }
+  else if (sum === TARGET) {
     feedbackEl.classList.add("success");
-    icon.textContent = "🎯";
-    text.textContent = t("fb_match");
+    icon.textContent = "🎯"; text.textContent = t("fb_match");
     registerSolution();
-  } else if (sum < TARGET) {
-    icon.textContent = "🧩";
-    text.textContent = t("fb_under", sum);
-  } else {
-    icon.textContent = "💭";
-    text.textContent = t("fb_over", sum);
-  }
+  } else if (sum < TARGET) { icon.textContent = "🧩"; text.textContent = t("fb_under", sum); }
+  else { icon.textContent = "💭"; text.textContent = t("fb_over", sum); }
 }
 
-// === Solutions ===
-const solutionsList = document.getElementById("solutionsList");
-const solutionsCount = document.getElementById("solutionsCount");
-
 function registerSolution() {
-  // Kanonische Form: sortierte Werte mit "+"
   const key = stackBlocks.map(b => b.value).sort((a, b) => a - b).join("+");
   if (!solutions.has(key)) {
     solutions.add(key);
     renderSolutions();
     celebrate();
-    // Update feedback to highlight new discovery
     setTimeout(() => {
       const text = feedbackEl.querySelector(".feedback-text");
       const icon = feedbackEl.querySelector(".feedback-icon");
@@ -884,7 +738,6 @@ function renderSolutions() {
   });
 }
 
-// === Celebration ===
 function celebrate() {
   const colors = ["#d77a4b", "#6b8e4e", "#e8b04b", "#5a8fb8", "#ba68c8"];
   const container = document.getElementById("celebrate");
@@ -900,15 +753,12 @@ function celebrate() {
   }
 }
 
-// === Clear ===
 document.getElementById("clearBtn").addEventListener("click", () => {
   stackBlocks = [];
-  // remove all blocks but keep target-line and placeholder
   stackArea.querySelectorAll(".block").forEach(b => b.remove());
   updateUI();
 });
 
-// === Language switching ===
 document.getElementById("langSwitch").addEventListener("click", (e) => {
   const btn = e.target.closest(".lang-btn");
   if (!btn) return;
@@ -916,7 +766,6 @@ document.getElementById("langSwitch").addEventListener("click", (e) => {
   btn.classList.add("active");
   currentLang = btn.dataset.lang;
   document.documentElement.lang = currentLang;
-  // Update all data-i18n elements
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.dataset.i18n;
     if (i18n[currentLang][key] && typeof i18n[currentLang][key] === "string") {
@@ -927,9 +776,9 @@ document.getElementById("langSwitch").addEventListener("click", (e) => {
   updateUI();
 });
 
-// === Initial render ===
 updateUI();
 renderSolutions();
+console.log("[Zahlenwerkstatt] App bereit.");
 </script>
 </body>
 </html>
